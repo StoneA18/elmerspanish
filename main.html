@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learn Spanish with Elmer | Online Tutoring</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #2c3e50;
+            background: #ffffff;
+        }
+
+        header {
+            background: #2c3e50;
+            color: white;
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+        }
+
+        header p {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+
+        nav {
+            background: #34495e;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            padding: 0;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        nav li {
+            margin: 0;
+        }
+
+        nav a {
+            display: block;
+            text-decoration: none;
+            color: white;
+            padding: 1.2rem 2rem;
+            font-weight: 500;
+            transition: background 0.3s;
+        }
+
+        nav a:hover {
+            background: #2c3e50;
+        }
+
+        section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        h2 {
+            color: #2c3e50;
+            margin-bottom: 2rem;
+            font-size: 2.5rem;
+            font-weight: 600;
+        }
+
+        .services {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .service-card {
+            background: white;
+            padding: 2rem;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            transition: box-shadow 0.3s;
+        }
+
+        .service-card:hover {
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .service-card h3 {
+            color: #2c3e50;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .about-content {
+            max-width: 800px;
+            line-height: 1.8;
+            font-size: 1.1rem;
+        }
+
+        .about-content p {
+            margin-bottom: 1.5rem;
+        }
+
+        .reviews {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .review-card {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 8px;
+            border-left: 4px solid #3498db;
+        }
+
+        .review-card .stars {
+            color: #f39c12;
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+
+        .review-card .reviewer {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-top: 1rem;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .contact-card {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .contact-card h3 {
+            color: #2c3e50;
+            margin-bottom: 1rem;
+        }
+
+        .contact-card a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .contact-card a:hover {
+            text-decoration: underline;
+        }
+
+        .calendar-container {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 8px;
+            margin-top: 2rem;
+        }
+
+        .calendar {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .calendar-header {
+            text-align: center;
+            font-weight: 600;
+            padding: 1rem;
+            background: #34495e;
+            color: white;
+        }
+
+        .calendar-day {
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: white;
+            border: 1px solid #e0e0e0;
+            cursor: pointer;
+            transition: all 0.3s;
+            border-radius: 4px;
+        }
+
+        .calendar-day:hover:not(.empty):not(.past) {
+            background: #3498db;
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .calendar-day.available {
+            background: #e8f5e9;
+            border-color: #4caf50;
+        }
+
+        .calendar-day.past {
+            opacity: 0.3;
+            cursor: default;
+        }
+
+        .calendar-day.empty {
+            background: transparent;
+            border: none;
+            cursor: default;
+        }
+
+        .time-slots {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .time-slot {
+            padding: 1rem;
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 4px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .time-slot:hover {
+            border-color: #3498db;
+            background: #e3f2fd;
+        }
+
+        .time-slot.selected {
+            background: #3498db;
+            color: white;
+            border-color: #3498db;
+        }
+
+        .price-calculator {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 8px;
+            margin-top: 2rem;
+            max-width: 500px;
+        }
+
+        .calculator-input {
+            margin: 1.5rem 0;
+        }
+
+        .calculator-input label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .calculator-input select,
+        .calculator-input input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        .calculator-result {
+            background: #2c3e50;
+            color: white;
+            padding: 1.5rem;
+            border-radius: 4px;
+            margin-top: 1.5rem;
+            text-align: center;
+        }
+
+        .calculator-result .price {
+            font-size: 2rem;
+            font-weight: 600;
+        }
+
+        footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 4rem;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 1rem 2.5rem;
+            border-radius: 4px;
+            text-decoration: none;
+            margin-top: 1.5rem;
+            transition: background 0.3s;
+            font-weight: 500;
+            font-size: 1.1rem;
+        }
+
+        .cta-button:hover {
+            background: #2980b9;
+        }
+
+        #selected-info {
+            background: #e3f2fd;
+            padding: 1rem;
+            border-radius: 4px;
+            margin-top: 1rem;
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2rem;
+            }
+
+            nav ul {
+                flex-direction: column;
+            }
+
+            nav a {
+                padding: 1rem;
+                border-bottom: 1px solid #2c3e50;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Learn Spanish with Elmer</h1>
+        <p>Professional Online Spanish Instruction</p>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#reviews">Reviews</a></li>
+            <li><a href="#scheduling">Scheduling</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <section id="services">
+        <h2>Services</h2>
+        <div class="services">
+            <div class="service-card">
+                <h3>Private Lessons</h3>
+                <p>One-on-one personalized instruction tailored to your learning goals. All levels welcome from complete beginners to advanced speakers.</p>
+            </div>
+            <div class="service-card">
+                <h3>Conversation Practice</h3>
+                <p>Develop fluency and confidence through structured conversation sessions on relevant topics.</p>
+            </div>
+            <div class="service-card">
+                <h3>Test Preparation</h3>
+                <p>Focused preparation for DELE, AP Spanish, and other standardized Spanish examinations.</p>
+            </div>
+            <div class="service-card">
+                <h3>Business Spanish</h3>
+                <p>Professional Spanish for the workplace, including industry-specific vocabulary and presentations.</p>
+            </div>
+        </div>
+
+        <div class="price-calculator">
+            <h3>Price Calculator</h3>
+            <div class="calculator-input">
+                <label>Lesson Type:</label>
+                <select id="lessonType">
+                    <option value="30">30 minutes - $25</option>
+                    <option value="60" selected>60 minutes - $45</option>
+                    <option value="90">90 minutes - $60</option>
+                </select>
+            </div>
+            <div class="calculator-input">
+                <label>Number of Lessons:</label>
+                <input type="number" id="numLessons" value="1" min="1" max="50">
+            </div>
+            <div class="calculator-result">
+                <div>Total Cost:</div>
+                <div class="price">$<span id="totalPrice">45</span></div>
+                <small>10% discount on packages of 10+ lessons</small>
+            </div>
+        </div>
+    </section>
+
+    <section id="about">
+        <h2>About Elmer</h2>
+        <div class="about-content">
+            <p>I'm Elmer, a certified Spanish instructor with over [X] years of experience teaching students of all ages and proficiency levels. My approach focuses on practical communication skills while building a strong foundation in grammar and vocabulary.</p>
+            
+            <p>I believe language learning should be engaging and relevant to your life. Whether you're learning Spanish for travel, career advancement, or personal enrichment, I'll work with you to create a customized learning plan that fits your goals and schedule.</p>
+            
+            <p>My teaching methodology combines traditional instruction with modern digital resources, ensuring you develop well-rounded skills in speaking, listening, reading, and writing.</p>
+        </div>
+    </section>
+
+    <section id="reviews">
+        <h2>Student Reviews</h2>
+        <div class="reviews">
+            <div class="review-card">
+                <div class="stars">★★★★★</div>
+                <p>"Elmer is an excellent teacher. His lessons are well-structured and he's very patient. I've made more progress in three months than I did in a year of self-study."</p>
+                <div class="reviewer">— Sarah M.</div>
+            </div>
+            <div class="review-card">
+                <div class="stars">★★★★★</div>
+                <p>"I needed to learn business Spanish for my job, and Elmer tailored the lessons perfectly to my industry. Highly recommend!"</p>
+                <div class="reviewer">— James R.</div>
+            </div>
+            <div class="review-card">
+                <div class="stars">★★★★★</div>
+                <p>"Very professional and flexible with scheduling. Elmer makes learning Spanish enjoyable and keeps me motivated."</p>
+                <div class="reviewer">— Maria L.</div>
+            </div>
+        </div>
+    </section>
+
+    <section id="scheduling">
+        <h2>Schedule a Lesson</h2>
+        <div class="calendar-container">
+            <h3>Available Times This Week</h3>
+            <p>Click on an available day to see time slots. Green indicates availability.</p>
+            <div class="calendar">
+                <div class="calendar-header">Sun</div>
+                <div class="calendar-header">Mon</div>
+                <div class="calendar-header">Tue</div>
+                <div class="calendar-header">Wed</div>
+                <div class="calendar-header">Thu</div>
+                <div class="calendar-header">Fri</div>
+                <div class="calendar-header">Sat</div>
+                
+                <div class="calendar-day empty"></div>
+                <div class="calendar-day empty"></div>
+                <div class="calendar-day empty"></div>
+                <div class="calendar-day empty"></div>
+                <div class="calendar-day empty"></div>
+                <div class="calendar-day past">1</div>
+                <div class="calendar-day past">2</div>
+                <div class="calendar-day available" data-day="3">3</div>
+                <div class="calendar-day available" data-day="4">4</div>
+                <div class="calendar-day available" data-day="5">5</div>
+                <div class="calendar-day available" data-day="6">6</div>
+                <div class="calendar-day available" data-day="7">7</div>
+                <div class="calendar-day available" data-day="8">8</div>
+                <div class="calendar-day available" data-day="9">9</div>
+            </div>
+
+            <div id="timeSlotContainer" style="display: none;">
+                <h3 style="margin-top: 2rem;">Available Times for Day <span id="selectedDay"></span></h3>
+                <div class="time-slots" id="timeSlots"></div>
+            </div>
+
+            <div id="selected-info"></div>
+        </div>
+        
+        <p style="margin-top: 2rem;">To confirm your booking, please contact me via email or phone with your preferred date and time.</p>
+        <a href="#contact" class="cta-button">Contact to Book</a>
+    </section>
+
+    <section id="contact">
+        <h2>Contact</h2>
+        <div class="contact-grid">
+            <div class="contact-card">
+                <h3>Email</h3>
+                <p><a href="mailto:elmer@spanishlessons.com">elmer@spanishlessons.com</a></p>
+            </div>
+            <div class="contact-card">
+                <h3>Phone</h3>
+                <p><a href="tel:+1234567890">+1 (XXX) XXX-XXXX</a></p>
+            </div>
+            <div class="contact-card">
+                <h3>WhatsApp</h3>
+                <p><a href="https://wa.me/1234567890">Message on WhatsApp</a></p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 Elmer Spanish Tutoring. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Price calculator
+        const lessonType = document.getElementById('lessonType');
+        const numLessons = document.getElementById('numLessons');
+        const totalPrice = document.getElementById('totalPrice');
+
+        function calculatePrice() {
+            const basePrice = parseInt(lessonType.value);
+            const lessons = parseInt(numLessons.value);
+            let total = basePrice * lessons;
+            
+            if (lessons >= 10) {
+                total = total * 0.9; // 10% discount
+            }
+            
+            totalPrice.textContent = Math.round(total);
+        }
+
+        lessonType.addEventListener('change', calculatePrice);
+        numLessons.addEventListener('input', calculatePrice);
+
+        // Calendar scheduling
+        const availableDays = document.querySelectorAll('.calendar-day.available');
+        const timeSlotContainer = document.getElementById('timeSlotContainer');
+        const timeSlotsDiv = document.getElementById('timeSlots');
+        const selectedDaySpan = document.getElementById('selectedDay');
+        const selectedInfo = document.getElementById('selected-info');
+
+        const timeSlots = ['9:00 AM', '10:00 AM', '11:00 AM', '1:00 PM', '2:00 PM', '3:00 PM', '4:00 PM', '5:00 PM'];
+
+        availableDays.forEach(day => {
+            day.addEventListener('click', function() {
+                const dayNum = this.getAttribute('data-day');
+                selectedDaySpan.textContent = dayNum;
+                
+                timeSlotsDiv.innerHTML = '';
+                timeSlots.forEach(time => {
+                    const slot = document.createElement('div');
+                    slot.className = 'time-slot';
+                    slot.textContent = time;
+                    slot.addEventListener('click', function() {
+                        document.querySelectorAll('.time-slot').forEach(s => s.classList.remove('selected'));
+                        this.classList.add('selected');
+                        selectedInfo.style.display = 'block';
+                        selectedInfo.innerHTML = `<strong>Selected:</strong> Day ${dayNum} at ${time}. Please scroll down to contact me to confirm this booking.`;
+                    });
+                    timeSlotsDiv.appendChild(slot);
+                });
+                
+                timeSlotContainer.style.display = 'block';
+                timeSlotContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            });
+        });
+    </script>
+</body>
+</html>
